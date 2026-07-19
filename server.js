@@ -1,12 +1,15 @@
+const dns = require("node:dns");
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
 const app = express();
-
+const path = require('path')
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
 const session = require('express-session')
+const challengeCtrl = require('./controllers/challenges.js')
 const { MongoStore } = require('connect-mongo')
 
 const authCtrl = require('./controllers/auth')
@@ -25,6 +28,8 @@ mongoose.connection.on("connected", () => {
 app.use(express.urlencoded({ extended: false }));
 // Middleware for using HTTP verbs such as PUT or DELETE
 app.use(methodOverride("_method"));
+const passUserToView = require('./middleware/pass-user-to-view.js')
+const isSignedIn = require('./middleware/is-signed-in.js')
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
 app.use(session({
@@ -36,12 +41,17 @@ app.use(session({
     }),
 }))
 
+app.use(express.static('public'))
+app.use(passUserToView)
+
 app.get('/', (req, res) => {
     res.render('home.ejs', {
         user: req.session.user,
     })
 })
 
+
+// Authenticating
 app.get('/auth/sign-up', authCtrl.showSignUpForm )
 app.post('/auth/sign-up', authCtrl.signUp)
 app.get('/auth/sign-in', authCtrl.showSignInForm)
@@ -56,6 +66,10 @@ app.get('/dashboard', async (req, res) => {
         user: req.session.user
     })
 })
+
+app.get('/challenges', challengeCtrl.index)
+app.get('/challenges/new', isSignedIn, challengeCtrl.showNewForm)
+app.post('/challenges', isSignedIn, challengeCtrl.createChallenge)
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

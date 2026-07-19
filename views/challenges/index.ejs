@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <%- include('../partials/nav.ejs') %>
+    <h1>ALL CHALLENGES</h1>
+    <% if (allChallenges.length === 0) { %>
+    <p>No challenges have been submitted yet.</p>
+<% } %>
+   <ul>
+    <% allChallenges.forEach((submission) => { %>
+        <li>
+            <a href="/challenges/<%= submission._id %>">
+                <h2><%= submission.title %></h2>
+            </a>
+
+            <iframe
+                width="500"
+                height="325"
+                src="<%= submission.videoUrl %>"
+                title="<%= submission.title %>"
+                allowfullscreen>
+            </iframe>
+
+            <p>Game: <%= submission.game %></p>
+            <p>Genre: <%= submission.genre %></p>
+            <p>Uploaded by: <%= submission.owner.username %></p>
+        </li>
+    <% }) %>
+</ul>
+</body>
+</html>
