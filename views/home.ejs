@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <% if (user) { %>
+        <h1>Welcome to the app <%= user.username %></h1>
+        <form action="/auth/sign-out?_method=DELETE" method="POST">
+            <button type="submit">Sign Out</button>
+        </form>
+        <a href="/dashboard">View dashboard</a>
+    <% } else { %>
+        <a href="/auth/sign-up">Sign Up</a>
+        <a href="/auth/sign-in">Sign In</a>
+    <% } %>
+
+    
+</body>
+</html>
