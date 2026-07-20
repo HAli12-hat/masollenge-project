@@ -67,10 +67,16 @@ const createChallenge = async (req, res)=>{
     res.redirect('/challenges')
 }
 
+const showChallenge = async (req, res)=>{
+    const foundChallenge = await Challenge.findById(req.params.challengeId).populate('owner').populate('comments.author')
+
+    res.render('challenges/show.ejs', {foundChallenge})
+}
 
 module.exports = 
 {
     index,
     showNewForm,
     createChallenge,
+    showChallenge
 }

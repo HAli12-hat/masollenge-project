@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show</title>
+</head>
+<body>
+    <%- include('../partials/nav.ejs') %>
+    <h1>Display Challenge</h1>
+    <h2><%= foundChallenge.title %></h2>
+    <iframe
+         width="500"
+         height="325"
+         src="<%= foundChallenge.videoUrl %>"
+         title="<%= foundChallenge.title %>"
+         allowfullscreen>
+    </iframe>
+    <p>Game: <%= foundChallenge.game %> </p>
+    <p>Genre: <%= foundChallenge.genre %> </p>
+    <p>Platform: <%= foundChallenge.platform %></p>
+    <p>Rules: <%= foundChallenge.rules %></p>
+    <p>Uploaded By: <%= foundChallenge.owner.username%> </p>
+</body>
+</html>

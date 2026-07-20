@@ -67,9 +67,16 @@ app.get('/dashboard', async (req, res) => {
     })
 })
 
+// Display all challenges 
 app.get('/challenges', challengeCtrl.index)
+
+// Display new submission form
 app.get('/challenges/new', isSignedIn, challengeCtrl.showNewForm)
+// Create submission 
 app.post('/challenges', isSignedIn, challengeCtrl.createChallenge)
+
+// Display specific challenge
+app.get('/challenges/:challengeId', challengeCtrl.showChallenge)
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
