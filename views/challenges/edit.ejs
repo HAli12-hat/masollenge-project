@@ -13,21 +13,19 @@
 
         <label for="game">Game:</label>
         <select id="game" name="game"  required>
-            <option value="<%=foundChallenge.game%>"><%=foundChallenge.game%></option>
-            <option value="Devil May Cry 5">Devil May Cry 5</option>
-            <option value="Ninja Gaiden Black">Ninja Gaiden Black</option>
-            <option value="A Hat in Time">A Hat in Time</option>
-            <option value="Lost Judgement">Lost Judgement</option>
+            <option value="Devil May Cry 5"  <%= foundChallenge.game === 'Devil May Cry 5' ? 'selected' : '' %>>Devil May Cry 5</option>
+            <option value="Ninja Gaiden Black" <%= foundChallenge.game === 'Ninja Gaiden Black' ? 'selected' : '' %>>Ninja Gaiden Black</option>
+            <option value="A Hat in Time" <%= foundChallenge.game === 'A Hat in Time' ? 'selected' : '' %>>A Hat in Time</option>
+            <option value="Lost Judgement" <%= foundChallenge.game === 'Lost Judgement' ? 'selected' : '' %>>Lost Judgement</option>
         </select>
 
         <label for="genre">Genre:</label>
         <select id="genre" name="genre" required>
-            <option value="<%=foundChallenge.genre%>"><%=foundChallenge.genre%></option>
-            <option value="action">Action</option>
-            <option value="hack-and-slash">Hack and Slash</option>
-            <option value="platformer">Platformer</option>
-            <option value="beat-em-up">Beat em up</option>
-            <option value="soulsborne">Soulsborne</option>
+            <option value="action" <%= foundChallenge.genre === 'action' ? 'selected' : '' %>>Action</option>
+            <option value="hack-and-slash" <%= foundChallenge.genre === 'hack-and-slash' ? 'selected' : '' %>>Hack and Slash</option>
+            <option value="platformer" <%= foundChallenge.genre === 'platformer' ? 'selected' : '' %>>Platformer</option>
+            <option value="beat-em-up" <%= foundChallenge.genre === 'beat-em-up' ? 'selected' : '' %>>Beat em up</option>
+            <option value="soulsborne" <%= foundChallenge.genre === 'soulsborne' ? 'selected' : '' %>>Soulsborne</option>
         </select>
         <br><br>
         <label for="rules">Rules:</label>
@@ -38,11 +36,10 @@
         <br><br>
         <label for="platform">Platform:</label>
         <select id="platform" name="platform" required>
-            <option value="<%=foundChallenge.platform%>"><%=foundChallenge.platform%></option>
-            <option value="pc">PC</option>
-            <option value="switch">Nintendo Switch</option>
-            <option value="ps5">PS5</option>
-            <option value="xbox">Xbox</option>
+            <option value="pc" <%= foundChallenge.platform === 'pc' ? 'selected' : '' %>>PC</option>
+            <option value="switch" <%= foundChallenge.platform === 'switch' ? 'selected' : '' %>>Nintendo Switch</option>
+            <option value="ps5" <%= foundChallenge.platform === 'ps5' ? 'selected' : '' %>>PS5</option>
+            <option value="xbox" <%= foundChallenge.platform === 'xbox' ? 'selected' : '' %>>Xbox</option>
         </select>
 
         <button type="submit">Edit Record</button>
