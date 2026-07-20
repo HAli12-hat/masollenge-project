@@ -10,6 +10,7 @@ const methodOverride = require("method-override");
 const morgan = require("morgan");
 const session = require('express-session')
 const challengeCtrl = require('./controllers/challenges.js')
+const commentCtrl = require('./controllers/comments.js')
 const { MongoStore } = require('connect-mongo')
 
 const authCtrl = require('./controllers/auth')
@@ -86,6 +87,9 @@ app.get('/challenges/:challengeId/edit', isSignedIn, challengeCtrl.showEdit)
 
 // Update the edited challenge
 app.put('/challenges/:challengeId', isSignedIn, challengeCtrl.updateChallenge)
+
+// Add a comment
+app.post('/challenges/:challengeId', isSignedIn, commentCtrl.createComment)
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

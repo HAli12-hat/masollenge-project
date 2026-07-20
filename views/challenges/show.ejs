@@ -31,6 +31,24 @@
 
     <a href="/challenges/<%=foundChallenge._id%>/edit">  Edit This Record</a>
     <% } %>
-   
+
+    <br><br>
+    <% if (user) { %>
+    <form action="/challenges/<%=foundChallenge._id%>" method="POST">
+        <h3>Share a comment!</h3>
+        <textarea name="content" rows="5"></textarea>
+        <button type="submit">Post Comment</button>
+
+        <h3>Comments:</h3>
+        <% foundChallenge.comments.forEach((comment) => { %>
+            <p><%= comment.content %></p>
+            <p>Asked by: <%= comment.author.username %></p>
+        <% }) %>
+    </form>
+<% } else { %>
+    <p>Sign in to leave a comment.</p>
+<% } %>
+
+    
 </body>
 </html>
