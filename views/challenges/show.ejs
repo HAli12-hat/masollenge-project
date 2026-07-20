@@ -22,11 +22,15 @@
     <p>Rules: <%= foundChallenge.rules %></p>
     <p>Uploaded By: <%= foundChallenge.owner.username%> </p>
 
-    <form action="/challenges/<%=foundChallenge._id%>?_method=DELETE" method="POST">
+
+    <% if (user && foundChallenge.owner._id.equals(user._id)) { %>
+         <form action="/challenges/<%=foundChallenge._id%>?_method=DELETE" method="POST">
 
         <button type="submit">Delete This Record</button>
     </form>
 
     <a href="/challenges/<%=foundChallenge._id%>/edit">  Edit This Record</a>
+    <% } %>
+   
 </body>
 </html>
