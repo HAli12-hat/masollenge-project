@@ -5,9 +5,13 @@
     <a href="/challenges">All Challenges</a>
     <a href="/challenges/new">Submit A Record</a>
     <a href="/users/profile">My Profile</a>
-    <a href="/auth/sign-out">Sign Out</a>
+    <form action="/auth/sign-out?_method=DELETE" method="POST">
+        <button type="submit">Sign Out</button>
+    </form>
   <% } else { %>
     <a href="/auth/sign-in">Sign In</a>
     <a href="/auth/sign-up">Sign Up</a>
   <% } %>
 </nav>
+
+
