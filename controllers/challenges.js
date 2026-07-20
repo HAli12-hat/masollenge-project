@@ -129,7 +129,9 @@ const updateChallenge = async (req, res)=>{
 }
 
 const favorite = async (req, res)=>{
-    await Challenge.findByIdAndUpdate(req.params.challengeId, {$push:{favoritedByUsers:req.params.userId}})
+    await Challenge.findByIdAndUpdate(req.params.challengeId, {$addToSet:{favoritedByUsers:req.session.user._id}})
+
+    res.redirect(`/challenges/${req.params.challengeId}`)
 }
 
 module.exports = 

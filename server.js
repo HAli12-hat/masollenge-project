@@ -92,7 +92,7 @@ app.put('/challenges/:challengeId', isSignedIn, challengeCtrl.updateChallenge)
 app.post('/challenges/:challengeId/comments', isSignedIn, commentCtrl.createComment)
 
 // Add favorited users
-app.post('/challenges/:challengeId/favorited-by/:userId', isSignedIn, challengeCtrl.favorite)
+app.post('/challenges/:challengeId/favorited', isSignedIn, challengeCtrl.favorite)
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
