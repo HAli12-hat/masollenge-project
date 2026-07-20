@@ -94,6 +94,9 @@ app.post('/challenges/:challengeId/comments', isSignedIn, commentCtrl.createComm
 // Add favorited users
 app.post('/challenges/:challengeId/favorited', isSignedIn, challengeCtrl.favorite)
 
+// Delete favorited users
+app.delete('/challenges/:challengeId/favorited', isSignedIn, challengeCtrl.unfavorite)
+
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
 });

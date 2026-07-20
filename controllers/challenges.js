@@ -70,7 +70,11 @@ const createChallenge = async (req, res)=>{
 const showChallenge = async (req, res)=>{
     const foundChallenge = await Challenge.findById(req.params.challengeId).populate('owner').populate('comments.author')
 
-    res.render('challenges/show.ejs', {foundChallenge})
+    const userHasFavorited = foundChallenge.favoritedByUsers.some((user) => {
+        return user.equals(req.session.user._id)
+    })
+
+    res.render('challenges/show.ejs', {foundChallenge, userHasFavorited})
 }
 
 const deleteChallenge = async (req, res)=>{
@@ -92,6 +96,7 @@ const deleteChallenge = async (req, res)=>{
 
 const showEdit = async (req, res)=>{
     const foundChallenge = await Challenge.findById(req.params.challengeId)
+
     res.render('challenges/edit.ejs', {foundChallenge})
 }
 
@@ -134,6 +139,12 @@ const favorite = async (req, res)=>{
     res.redirect(`/challenges/${req.params.challengeId}`)
 }
 
+const unfavorite = async (req, res)=>{
+    await Challenge.findByIdAndUpdate(req.params.challengeId, {$pull:{favoritedByUsers:req.session.user._id}})
+
+    res.redirect(`/challenges/${req.params.challengeId}`)
+}
+
 module.exports = 
 {
     index,
@@ -143,5 +154,6 @@ module.exports =
     deleteChallenge,
     showEdit,
     updateChallenge,
-    favorite
+    favorite,
+    unfavorite
 }

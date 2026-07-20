@@ -42,8 +42,14 @@
             <p>Favorited by: <%= foundChallenge.favoritedByUsers.length%> people.</p>
     <% } %>
 
-    <form action="/challenges/<%=foundChallenge._id%>/favorited" method="POST"><button type="submit">♥️</button></form>
+  <%  if (userHasFavorited){ %>
+        <form action="/challenges/<%=foundChallenge._id%>/favorited?_method=DELETE" method="POST"><button type="submit">❌</button></form>
+  <%  }else{ %>
+        <form action="/challenges/<%=foundChallenge._id%>/favorited" method="POST"><button type="submit">👍</button></form>
 
+   <% } %>
+
+    
    <% if (foundChallenge.comments.length === 0 ){ %>
         <p>No comments posted.</p>
    <% } %>
