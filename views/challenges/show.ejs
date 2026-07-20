@@ -33,7 +33,16 @@
     <% } %>
 
     <br><br>
+    <h3>Favorites</h3>
+   <% if (foundChallenge.favoritedByUsers.length === 0){ %>
+        <p>No favorites on this post.</p>
+   <% } else if (foundChallenge.favoritedByUsers.length === 1){ %>
+        <p>Favorited by: <%= foundChallenge.favoritedByUsers.length%> person.</p>
+  <%  }else{ %>
+            <p>Favorited by: <%= foundChallenge.favoritedByUsers.length%> people.</p>
+    <% } %>
 
+    <form action="/challenges/<%=foundChallenge._id%>/favorited-by/<%=user._id%>" method="POST"><button type="submit">♥️</button></form>
 
    <% if (foundChallenge.comments.length === 0 ){ %>
         <p>No comments posted.</p>

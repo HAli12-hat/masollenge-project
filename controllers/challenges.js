@@ -107,7 +107,7 @@ const updateChallenge = async (req, res)=>{
     if (!isOwner){
         return res.send('You do not have permission for this action.')
     }
-    
+
     const embedUrl = convertToEmbedUrl(req.body.videoUrl)
 
     if (!embedUrl) {
@@ -128,6 +128,10 @@ const updateChallenge = async (req, res)=>{
     res.redirect(`/challenges/${req.params.challengeId}`)
 }
 
+const favorite = async (req, res)=>{
+    await Challenge.findByIdAndUpdate(req.params.challengeId, {$push:{favoritedByUsers:req.params.userId}})
+}
+
 module.exports = 
 {
     index,
@@ -136,5 +140,6 @@ module.exports =
     showChallenge,
     deleteChallenge,
     showEdit,
-    updateChallenge
+    updateChallenge,
+    favorite
 }

@@ -61,7 +61,11 @@ const challengeSchema = new mongoose.Schema({
         required: true
     },
 
-    comments: [commentSchema]
+    comments: [commentSchema],
+    favoritedByUsers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }],
 
 
 },{timestamps: true})
