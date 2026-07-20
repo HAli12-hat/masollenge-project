@@ -79,8 +79,29 @@ const deleteChallenge = async (req, res)=>{
 }
 
 const showEdit = async (req, res)=>{
-    const foundChallenge = await Challenge.findById(req.params.challengeId).populate('owner')
+    const foundChallenge = await Challenge.findById(req.params.challengeId)
     res.render('challenges/edit.ejs', {foundChallenge})
+}
+
+const updateChallenge = async (req, res)=>{
+    const embedUrl = convertToEmbedUrl(req.body.videoUrl)
+
+    if (!embedUrl) {
+        return res.send('Please enter a valid YouTube URL.')
+    }
+
+    const recordData = 
+    {
+        title: req.body.title,
+        game: req.body.game,
+        genre: req.body.genre,
+        rules: req.body.rules,
+        videoUrl: embedUrl,
+        platform: req.body.platform
+    }
+
+    await Challenge.findByIdAndUpdate(req.params.challengeId, recordData)
+    res.redirect(`/challenges/${req.params.challengeId}`)
 }
 
 module.exports = 
@@ -90,5 +111,6 @@ module.exports =
     createChallenge,
     showChallenge,
     deleteChallenge,
-    showEdit
+    showEdit,
+    updateChallenge
 }

@@ -22,7 +22,7 @@
 
         <label for="genre">Genre:</label>
         <select id="genre" name="genre" required>
-            <option value="">Choose game genre</option>
+            <option value="<%=foundChallenge.genre%>"><%=foundChallenge.genre%></option>
             <option value="action">Action</option>
             <option value="hack-and-slash">Hack and Slash</option>
             <option value="platformer">Platformer</option>
@@ -31,24 +31,21 @@
         </select>
         <br><br>
         <label for="rules">Rules:</label>
-        <input type="text" name="rules" required>
-        
-        <label for="owner">Owner:</label>
-        <input type="text" name="owner" required>
+        <input type="text" name="rules" value="<%=foundChallenge.rules%>" required>
 
         <label for="videoUrl">Video URL:</label>
-        <input type="url" name="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required>
+        <input type="url" name="videoUrl" placeholder="https://www.youtube.com/watch?v=..."  value="<%=foundChallenge.videoUrl%>" required>
         <br><br>
         <label for="platform">Platform:</label>
         <select id="platform" name="platform" required>
-            <option value="">Choose a platform</option>
+            <option value="<%=foundChallenge.platform%>"><%=foundChallenge.platform%></option>
             <option value="pc">PC</option>
             <option value="switch">Nintendo Switch</option>
             <option value="ps5">PS5</option>
             <option value="xbox">Xbox</option>
         </select>
 
-        <button type="submit">Submit Record</button>
+        <button type="submit">Edit Record</button>
     </form>
 </body>
 </html>

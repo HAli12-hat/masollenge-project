@@ -84,6 +84,9 @@ app.delete('/challenges/:challengeId', isSignedIn, challengeCtrl.deleteChallenge
 // Display the edit form a specific challenge
 app.get('/challenges/:challengeId/edit', isSignedIn, challengeCtrl.showEdit)
 
+// Update the edited challenge
+app.put('/challenges/:challengeId', isSignedIn, challengeCtrl.updateChallenge)
+
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
 });
