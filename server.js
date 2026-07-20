@@ -89,7 +89,7 @@ app.get('/challenges/:challengeId/edit', isSignedIn, challengeCtrl.showEdit)
 app.put('/challenges/:challengeId', isSignedIn, challengeCtrl.updateChallenge)
 
 // Add a comment
-app.post('/challenges/:challengeId', isSignedIn, commentCtrl.createComment)
+app.post('/challenges/:challengeId/comments', isSignedIn, commentCtrl.createComment)
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
