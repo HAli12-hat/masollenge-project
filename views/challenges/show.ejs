@@ -21,5 +21,10 @@
     <p>Platform: <%= foundChallenge.platform %></p>
     <p>Rules: <%= foundChallenge.rules %></p>
     <p>Uploaded By: <%= foundChallenge.owner.username%> </p>
+
+    <form action="/challenges/<%=foundChallenge._id%>?_method=DELETE" method="POST">
+
+        <button type="submit">Delete This Record</button>
+    </form>
 </body>
 </html>

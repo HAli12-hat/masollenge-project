@@ -73,10 +73,16 @@ const showChallenge = async (req, res)=>{
     res.render('challenges/show.ejs', {foundChallenge})
 }
 
+const deleteChallenge = async (req, res)=>{
+    await Challenge.findByIdAndDelete(req.params.challengeId)
+    res.redirect('/challenges')
+}
+
 module.exports = 
 {
     index,
     showNewForm,
     createChallenge,
-    showChallenge
+    showChallenge,
+    deleteChallenge
 }

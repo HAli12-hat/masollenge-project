@@ -78,6 +78,9 @@ app.post('/challenges', isSignedIn, challengeCtrl.createChallenge)
 // Display specific challenge
 app.get('/challenges/:challengeId', challengeCtrl.showChallenge)
 
+// Delete a specific challenge
+app.delete('/challenges/:challengeId', isSignedIn, challengeCtrl.deleteChallenge)
+
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
 });
