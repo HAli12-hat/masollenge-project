@@ -96,6 +96,18 @@ const showEdit = async (req, res)=>{
 }
 
 const updateChallenge = async (req, res)=>{
+    const foundChallenge = await Challenge.findById(req.params.challengeId)
+
+    if (!foundChallenge){
+        return res.send('Record Does Not Exist.')
+    }
+
+    const isOwner = foundChallenge.owner.equals(req.session.user._id)
+
+    if (!isOwner){
+        return res.send('You do not have permission for this action.')
+    }
+    
     const embedUrl = convertToEmbedUrl(req.body.videoUrl)
 
     if (!embedUrl) {
