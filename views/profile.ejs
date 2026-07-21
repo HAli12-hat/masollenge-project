@@ -8,7 +8,7 @@
     <title><%= currentUser.username %>'s Profile</title>
 </head>
 <body>
-    <h1><%= user.username %>'s profile!</h1>
+    <h1><%= currentUser.username %>'s profile!</h1>
      <% if (userChallenges.length === 0) { %>
         <p>You have not submitted any challenges yet.</p>
     <% } else{ %>
@@ -28,5 +28,7 @@
         
     <% }) %>
    <% }%>
+
+   <%= userComments %>
 </body> 
 </html>
