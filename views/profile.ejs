@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+
+    <title><%= currentUser.username %>'s Profile</title>
+</head>
+<body>
+    <h1><%= user.username %>'s profile!</h1>
+     <% if (userChallenges.length === 0) { %>
+        <p>You have not submitted any challenges yet.</p>
+    <% } else{ %>
+     <p>Number of challenges: <%= userChallenges.length %></p>
+   <%  userChallenges.forEach(function(challenge){ %>
+      <p> Video Title: <%= challenge.title %> </p>
+        <p> Game: <%= challenge.game %> </p>
+        <p> Genre: <%= challenge.genre %> </p>
+        Video Link: <br>
+         <iframe
+         width="500"
+         height="325"
+         src="<%= challenge.videoUrl %>"
+         title="<%= challenge.title %>"
+         allowfullscreen>
+    </iframe>
+        
+    <% }) %>
+   <% }%>
+</body> 
+</html>

@@ -11,6 +11,7 @@ const morgan = require("morgan");
 const session = require('express-session')
 const challengeCtrl = require('./controllers/challenges.js')
 const commentCtrl = require('./controllers/comments.js')
+const profileCtrl = require('./controllers/profile.js')
 const { MongoStore } = require('connect-mongo')
 
 const authCtrl = require('./controllers/auth')
@@ -59,14 +60,7 @@ app.get('/auth/sign-in', authCtrl.showSignInForm)
 app.post('/auth/sign-in', authCtrl.signIn)
 app.delete('/auth/sign-out', authCtrl.signOut)
 
-app.get('/dashboard', async (req, res) => {
-    if (!req.session.user){
-        return res.redirect('/auth/sign-in')
-    }
-    res.render('dashboard.ejs', {
-        user: req.session.user
-    })
-})
+
 
 // Display all challenges 
 app.get('/challenges', challengeCtrl.index)
@@ -99,6 +93,10 @@ app.post('/challenges/:challengeId/favorited', isSignedIn, challengeCtrl.favorit
 
 // Delete favorited users
 app.delete('/challenges/:challengeId/favorited', isSignedIn, challengeCtrl.unfavorite)
+
+// Access profile page
+app.get('/users/profile', isSignedIn, profileCtrl.showProfile)
+
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
