@@ -91,6 +91,9 @@ app.put('/challenges/:challengeId', isSignedIn, challengeCtrl.updateChallenge)
 // Add a comment
 app.post('/challenges/:challengeId/comments', isSignedIn, commentCtrl.createComment)
 
+// Delete a comment
+app.delete('/challenges/:challengeId/comments/:commentId', isSignedIn, commentCtrl.deleteComment)
+
 // Add favorited users
 app.post('/challenges/:challengeId/favorited', isSignedIn, challengeCtrl.favorite)
 
