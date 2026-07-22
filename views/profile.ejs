@@ -29,6 +29,29 @@
     <% }) %>
    <% }%>
 
-   <%= userComments %>
+   <section>
+    <h2>My Comments</h2>
+
+    <% if (userComments.length === 0) { %>
+        <p>You have not posted any comments yet.</p>
+    <% } else { %>
+
+        <p>Number of comments: <%= userComments.length %></p>
+
+        <% userComments.forEach((item) => { %>
+            <article>
+                <p><%= item.comment.content %></p>
+
+                <p>
+                    Posted on:
+                    <a href="/challenges/<%= item.challenge._id %>">
+                        <%= item.challenge.title %>
+                    </a>
+                </p>
+            </article>
+        <% }) %>
+
+    <% } %>
+</section>
 </body> 
 </html>
