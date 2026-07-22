@@ -145,7 +145,6 @@ iframe {
     border-left: 3px solid #9a7b3f;
 }
 
-/* Profile sections */
 
 .profile-info{
     display: flex;
@@ -161,4 +160,8 @@ iframe {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+}
+
+.tagline{
+    text-align: center;
 }

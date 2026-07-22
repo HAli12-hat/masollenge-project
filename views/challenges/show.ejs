@@ -10,85 +10,131 @@
 <body>
     <%- include('../partials/nav.ejs') %>
     <h1>Display Challenge</h1>
-    <h2><%= foundChallenge.title %></h2>
-    <iframe
-         width="500"
-         height="325"
-         src="<%= foundChallenge.videoUrl %>"
-         title="<%= foundChallenge.title %>"
-         allowfullscreen>
-    </iframe>
-    <p>Game: <%= foundChallenge.game %> </p>
-    <p>Genre: <%= foundChallenge.genre %> </p>
-    <p>Platform: <%= foundChallenge.platform %></p>
-    <p>Rules: <%= foundChallenge.rules %></p>
-    <p>Uploaded By: <%= foundChallenge.owner.username%> </p>
+     <main class="show-page">
+        <article class="challenge-card show-card">
+            <h1><%= foundChallenge.title %></h1>
 
+            <iframe
+                src="<%= foundChallenge.videoUrl %>"
+                title="<%= foundChallenge.title %>"
+                allowfullscreen>
+            </iframe>
 
-    <% if (user && foundChallenge.owner._id.equals(user._id)) { %>
-         <form action="/challenges/<%=foundChallenge._id%>?_method=DELETE" method="POST">
+            <div class="challenge-details">
+                <p><strong>Game:</strong> <%= foundChallenge.game %></p>
+                <p><strong>Genre:</strong> <%= foundChallenge.genre %></p>
+                <p><strong>Platform:</strong> <%= foundChallenge.platform %></p>
+                <p><strong>Rules:</strong> <%= foundChallenge.rules %></p>
+                <p>
+                    <strong>Uploaded by:</strong>
+                    <%= foundChallenge.owner.username %>
+                </p>
+            </div>
 
-        <button type="submit">Delete This Record</button>
-    </form>
+            <% if (user && foundChallenge.owner._id.equals(user._id)) { %>
+                <div class="owner-controls">
+                    <a
+                        class="button-link"
+                        href="/challenges/<%= foundChallenge._id %>/edit"
+                    >
+                        Edit Record
+                    </a>
 
-    <a href="/challenges/<%=foundChallenge._id%>/edit">  Edit This Record</a>
-    <% } %>
+                    <form
+                        action="/challenges/<%= foundChallenge._id %>?_method=DELETE"
+                        method="POST"
+                    >
+                        <button type="submit">Delete Record</button>
+                    </form>
+                </div>
+            <% } %>
+        </article>
 
-    <br><br>
-    <h3>Favorites</h3>
-   <% if (foundChallenge.favoritedByUsers.length === 0){ %>
-        <p>No favorites on this post.</p>
-   <% } else if (foundChallenge.favoritedByUsers.length === 1){ %>
-        <p>Favorited by: <%= foundChallenge.favoritedByUsers.length%> person.</p>
-  <%  }else{ %>
-            <p>Favorited by: <%= foundChallenge.favoritedByUsers.length%> people.</p>
-    <% } %>
+        <section class="favorites-section">
+            <h2>Favorites</h2>
 
-  <%  if (userHasFavorited){ %>
-        <form action="/challenges/<%=foundChallenge._id%>/favorited?_method=DELETE" method="POST"><button type="submit">❌</button></form>
-  <%  }else{ %>
-        <form action="/challenges/<%=foundChallenge._id%>/favorited" method="POST"><button type="submit">👍</button></form>
+            <% if (foundChallenge.favoritedByUsers.length === 0) { %>
+                <p>No favorites on this post.</p>
+            <% } else if (foundChallenge.favoritedByUsers.length === 1) { %>
+                <p>Favorited by 1 person.</p>
+            <% } else { %>
+                <p>
+                    Favorited by
+                    <%= foundChallenge.favoritedByUsers.length %>
+                    people.
+                </p>
+            <% } %>
 
-   <% } %>
+            <% if (user) { %>
+                <% if (userHasFavorited) { %>
+                    <form
+                        action="/challenges/<%= foundChallenge._id %>/favorited?_method=DELETE"
+                        method="POST"
+                    >
+                        <button type="submit">Remove Favorite</button>
+                    </form>
+                <% } else { %>
+                    <form
+                        action="/challenges/<%= foundChallenge._id %>/favorited"
+                        method="POST"
+                    >
+                        <button type="submit">Favorite</button>
+                    </form>
+                <% } %>
+            <% } else { %>
+                <p>Sign in to favorite this challenge.</p>
+            <% } %>
+        </section>
 
+        <section class="comments-section">
+            <h2>Comments</h2>
 
-   <section>
-    
-   <% if (foundChallenge.comments.length === 0 ){ %>
-        <p>No comments posted.</p>
-   <% } %>
+            <% if (foundChallenge.comments.length === 0) { %>
+                <p>No comments posted.</p>
+            <% } %>
 
-    <h3>Comments:</h3>
-        <% foundChallenge.comments.forEach((comment) => { %>
-            <div class="comment">
-            <p><%= comment.content %></p>
-            <p>Posted by: <%= comment.author.username %></p>
-                
+            <div class="comments-list">
+                <% foundChallenge.comments.forEach((comment) => { %>
+                    <article class="comment">
+                        <p><%= comment.content %></p>
 
-          <%  if (user){ %>
-                <% if (comment.author._id.equals(user._id)){ %>
-                <form action="/challenges/<%=foundChallenge._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                <button type="submit"> Delete Comment </button>
-            </form>
-           <% }} %>
-           
-            
-        <% }) %>
+                        <p class="comment-author">
+                            Posted by: <%= comment.author.username %>
+                        </p>
 
-    <% if (user) { %>
-    <form action="/challenges/<%=foundChallenge._id%>/comments" method="POST">
-        <h3>Share a comment!</h3>
-        <textarea name="content" rows="5"></textarea>
-        <button type="submit">Post Comment</button>
-    </form>
-<% } else { %>
-    <p>Sign in to leave a comment.</p>
-<% } %>
-</div>
+                        <% if (user && comment.author._id.equals(user._id)) { %>
+                            <form
+                                action="/challenges/<%= foundChallenge._id %>/comments/<%= comment._id %>?_method=DELETE"
+                                method="POST"
+                            >
+                                <button type="submit">Delete Comment</button>
+                            </form>
+                        <% } %>
+                    </article>
+                <% }) %>
+            </div>
 
+            <% if (user) { %>
+                <form
+                    class="comment-form"
+                    action="/challenges/<%= foundChallenge._id %>/comments"
+                    method="POST"
+                >
+                    <h2>Share a Comment</h2>
 
-</section>
+                    <textarea
+                        name="content"
+                        rows="5"
+                        required
+                    ></textarea>
 
-    
+                    <button type="submit">Post Comment</button>
+                </form>
+            <% } else { %>
+                <p>Sign in to leave a comment.</p>
+            <% } %>
+        </section>
+    </main>
+</body>
 </body>
 </html>
