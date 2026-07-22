@@ -58,8 +58,11 @@
 
     <h3>Comments:</h3>
         <% foundChallenge.comments.forEach((comment) => { %>
+            <div class="comment">
             <p><%= comment.content %></p>
             <p>Posted by: <%= comment.author.username %></p>
+                
+
           <%  if (user){ %>
                 <% if (comment.author._id.equals(user._id)){ %>
                 <form action="/challenges/<%=foundChallenge._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
@@ -79,7 +82,7 @@
 <% } else { %>
     <p>Sign in to leave a comment.</p>
 <% } %>
-
+</div>
 
 
 </section>

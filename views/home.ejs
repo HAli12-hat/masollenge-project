@@ -13,7 +13,6 @@
     <% if (user) { %>
         <%- include('./partials/nav.ejs') %>
         <h1>Welcome to the app <%= user.username %></h1>
-        <a href="/dashboard">View dashboard</a>
     <% } else { %>
         <a href="/auth/sign-up">Sign Up</a>
         <a href="/auth/sign-in">Sign In</a>

@@ -5,8 +5,44 @@ const index = async (req, res)=>{
     res.render('challenges/index.ejs', {allChallenges})
 }
 
-const showNewForm = (req, res)=>{
-    res.render('challenges/new.ejs')
+const showNewForm = async (req, res) => {
+    const searchTerm = req.query.search || ''
+
+    let games = []
+    let apiError = null
+
+    if (searchTerm) {
+        try {
+            const apiUrl =
+                `https://api.rawg.io/api/games` +
+                `?key=${process.env.RAWG_API}` +
+                `&search=${encodeURIComponent(searchTerm)}` +
+                `&search_precise=true` +
+                `&page_size=10`
+
+            const response = await fetch(apiUrl)
+
+            if (!response.ok) {
+                throw new Error(
+                    `RAWG request failed with status ${response.status}`
+                )
+            }
+
+            const data = await response.json()
+
+            games = data.results
+        } catch (error) {
+            console.log('RAWG API error:', error.message)
+
+            apiError = 'Games could not be loaded. Please try again.'
+        }
+    }
+
+    res.render('challenges/new.ejs', {
+        games,
+        searchTerm,
+        apiError
+    })
 }
 
 const convertToEmbedUrl = (videoUrl) => {

@@ -8,28 +8,36 @@
     <title><%= currentUser.username %>'s Profile</title>
 </head>
 <body>
+    <%- include('./partials/nav.ejs') %>
     <h1><%= currentUser.username %>'s profile!</h1>
      <% if (userChallenges.length === 0) { %>
         <p>You have not submitted any challenges yet.</p>
+
+     
+        
     <% } else{ %>
-     <p>Number of challenges: <%= userChallenges.length %></p>
+        <ul class="profile-info">
+    <li> <p>Number of challenges: <%= userChallenges.length %></p> </li>
    <%  userChallenges.forEach(function(challenge){ %>
-      <p> Video Title: <%= challenge.title %> </p>
-        <p> Game: <%= challenge.game %> </p>
-        <p> Genre: <%= challenge.genre %> </p>
-        Video Link: <br>
+    <li>  <p> Video Title: <%= challenge.title %> </p> </li>
+       <li> <p> Game: <%= challenge.game %> </p> </li>
+       <li> <p> Genre: <%= challenge.genre %> </p> </li>
+       <li> Video Link: </li>
          <iframe
          width="500"
          height="325"
          src="<%= challenge.videoUrl %>"
          title="<%= challenge.title %>"
          allowfullscreen>
-    </iframe>
-        
+    </iframe> 
+    
+    
     <% }) %>
+    </ul>
    <% }%>
-
-   <section>
+   
+    
+   <section class="user-comments">
     <h2>My Comments</h2>
 
     <% if (userComments.length === 0) { %>

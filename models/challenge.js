@@ -25,7 +25,7 @@ const challengeSchema = new mongoose.Schema({
     {
         type: String,
         required: true,
-        enum: ['Devil May Cry 5', 'Ninja Gaiden Black', 'A Hat in Time', 'Lost Judgement']
+        
     },
 
     genre:

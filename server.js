@@ -97,6 +97,13 @@ app.delete('/challenges/:challengeId/favorited', isSignedIn, challengeCtrl.unfav
 // Access profile page
 app.get('/users/profile', isSignedIn, profileCtrl.showProfile)
 
+app.get('/*splat', (req, res) => {
+    res.render('error.ejs', {
+        msg: 404
+    })
+})
+
+
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

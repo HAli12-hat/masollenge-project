@@ -3,52 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+     <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>Submit a Challenge</title>
 </head>
+
 <body>
+    <%- include('../partials/nav.ejs') %>
+
     <h1>Submit Your Own Record</h1>
-    <form action="/challenges" method="POST">
-        <label for="title">Title:</label>
-        <input type="text" name="title" required>
 
-        <label for="game">Game:</label>
-        <select id="game" name="game" required>
-            <option value="">Choose a game</option>
-            <option value="Devil May Cry 5">Devil May Cry 5</option>
-            <option value="Ninja Gaiden Black">Ninja Gaiden Black</option>
-            <option value="A Hat in Time">A Hat in Time</option>
-            <option value="Lost Judgement">Lost Judgement</option>
-        </select>
+    <section class="field">
+        <h2>Find Your Game</h2>
 
-        <label for="genre">Genre:</label>
-        <select id="genre" name="genre" required>
-            <option value="">Choose game genre</option>
-            <option value="action">Action</option>
-            <option value="hack-and-slash">Hack and Slash</option>
-            <option value="platformer">Platformer</option>
-            <option value="beat-em-up">Beat em up</option>
-            <option value="soulsborne">Soulsborne</option>
-        </select>
-        <br><br>
-        <label for="rules">Rules:</label>
-        <input type="text" name="rules" required>
-        
-        <label for="owner">Owner:</label>
-        <input type="text" name="owner" required>
+        <form action="/challenges/new" method="GET">
+            <label for="search">Search for a game:</label>
 
-        <label for="videoUrl">Video URL:</label>
-        <input type="url" name="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required>
-        <br><br>
-        <label for="platform">Platform:</label>
-        <select id="platform" name="platform" required>
-            <option value="">Choose a platform</option>
-            <option value="pc">PC</option>
-            <option value="switch">Nintendo Switch</option>
-            <option value="ps5">PS5</option>
-            <option value="xbox">Xbox</option>
-        </select>
+            <input
+                type="text"
+                id="search"
+                name="search"
+                value="<%= searchTerm %>"
+                placeholder="Example: Devil May Cry 3"
+                required
+            >
 
-        <button type="submit">Submit Record</button>
-    </form>
+            <button type="submit">Search Games</button>
+        </form>
+
+        <% if (apiError) { %>
+            <p><%= apiError %></p>
+        <% } %>
+
+        <% if (searchTerm && games.length === 0 && !apiError) { %>
+            <p>No matching games were found.</p>
+        <% } %>
+    </section>
+
+    <% if (games.length > 0) { %>
+        <form action="/challenges" method="POST">
+            <label for="title">Challenge title:</label>
+
+            <input
+                type="text"
+                id="title"
+                name="title"
+                required
+            >
+
+            <label for="game">Game:</label>
+
+            <select id="game" name="game" required>
+                <option value="">Choose a game</option>
+
+                <% games.forEach((game) => { %>
+                    <option value="<%= game.name %>">
+                        <%= game.name %>
+                    </option>
+                <% }) %>
+            </select>
+
+            <label for="genre">Genre:</label>
+
+            <select id="genre" name="genre" required>
+                <option value="">Choose game genre</option>
+                <option value="action">Action</option>
+                <option value="hack-and-slash">
+                    Hack and Slash
+                </option>
+                <option value="soulsborne">Soulsborne</option>
+                <option value="platformer">Platformer</option>
+                <option value="beat-em-up">Beat 'em Up</option>
+            </select>
+
+            <label for="rules">Rules:</label>
+
+            <textarea
+                id="rules"
+                name="rules"
+                rows="5"
+                required
+            ></textarea>
+
+            <label for="videoUrl">YouTube video URL:</label>
+
+            <input
+                type="url"
+                id="videoUrl"
+                name="videoUrl"
+                placeholder="https://www.youtube.com/watch?v=..."
+                required
+            >
+
+            <label for="platform">Platform:</label>
+
+            <select id="platform" name="platform" required>
+                <option value="">Choose a platform</option>
+                <option value="pc">PC</option>
+                <option value="switch">Nintendo Switch</option>
+                <option value="ps5">PS5</option>
+                <option value="xbox">Xbox</option>
+            </select>
+
+            <button type="submit">Submit Record</button>
+        </form>
+    <% } else if (!searchTerm) { %>
+        <p>Search for a game before submitting your challenge.</p>
+    <% } %>
+
+    <p>
+        Game data provided by
+        <a
+            href="https://rawg.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            RAWG
+        </a>.
+    </p>
 </body>
 </html>
